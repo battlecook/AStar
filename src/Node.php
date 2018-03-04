@@ -10,8 +10,8 @@ final class Node
     public $index;
     public $f;
 
-    public $g; // 시작점부터 계산된 비용
-    public $heuristic; // 도착점 까지 계산된 비용
+    public $g;
+    public $heuristic;
 
     public $parent;
 

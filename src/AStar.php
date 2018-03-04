@@ -232,6 +232,18 @@ final class AStar
     public function displayRoute()
     {
         header('content-type:text/html;charset=utf-8');
+
+        echo 'S : start point';
+        echo '<br>';
+        echo 'E : end point';
+        echo '<br>';
+        echo 'Map size';
+        echo '<br>';
+        echo 'x : random ( -10 ~ 10 )';
+        echo '<br>';
+        echo 'y : random ( -10 ~ 10 )';
+        echo '<br>';
+
         echo '<table border="1">';
         for ($y = $this->yRange->min; $y <= $this->yRange->max; $y++)
         {
