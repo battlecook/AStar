@@ -228,4 +228,42 @@ final class AStar
     {
         return (abs($node->x - $this->end->x) + abs($node->y - $this->end->y)) * self::DIRECT_WEIGHT;
     }
+
+    public function displayPic()
+    {
+        header('content-type:text/html;charset=utf-8');
+        echo '<table border="1">';
+        for ($y = $this->yRange->min; $y <= $this->yRange->max; $y++)
+        {
+            echo '<tr>';
+            for ($x = $this->xRange->min; $x <= $this->xRange->max; $x++)
+            {
+                $current = new Point($x, $y);
+
+                if (in_array($current, $this->obstacleList))
+                    $bg = 'bgcolor="#000"';
+                elseif (in_array($current, $this->route))
+                    $bg = 'bgcolor="#5cb85c"';
+                else
+                    $bg = '';
+
+                if ($current === $this->start)
+                {
+                    $content = 'S';
+                }
+                elseif ($current === $this->end)
+                {
+                    $content = 'E';
+                }
+                else
+                {
+                    $content = '&nbsp;';
+                }
+
+                echo '<td style="width:22px; height: 22px;" ' . $bg . '>' . $content . '</td>';
+            }
+            echo '</tr>';
+        }
+        echo '</table>';
+    }
 }
