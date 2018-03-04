@@ -23,7 +23,7 @@ $start = new Point($startX, $startY);
 $endX = rand($minX, $maxX);
 $endY = rand($minY, $maxY);
 
-$end = new Point($minY, $maxY);
+$end = new Point($endX, $endY);
 
 $obstacleCount = (int) (($maxX - $minX) * ($maxY - $minY) * 0.3);
 
