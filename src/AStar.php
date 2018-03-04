@@ -57,6 +57,7 @@ final class AStar
         $this->end = $end;
 
         $this->obstacleList = $obstacleGroup;
+        $this->route = array();
     }
 
     /**
