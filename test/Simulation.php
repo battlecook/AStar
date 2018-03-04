@@ -42,4 +42,4 @@ for($i=0; $i<$obstacleCount; $i++)
 
 $aStar = new AStar($start, $end, $xRange, $yRange, $obstacleList);
 $aStar->route();
-$aStar->displayPic();
+$aStar->displayRoute();

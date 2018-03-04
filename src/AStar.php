@@ -15,7 +15,6 @@ final class AStar
     private $xRange;
     private $yRange;
 
-
     public $open;
     public $close;
 
@@ -63,7 +62,7 @@ final class AStar
     /**
      * @return Node[]
      */
-    public function route()
+    public function route(): array
     {
         $current = new Node($this->start->x, $this->start->y);
         $current->index = $this->pointIndex($current);
@@ -210,12 +209,12 @@ final class AStar
         }
     }
 
-    private function isEndPoint(Node $node)
+    private function isEndPoint(Node $node): bool
     {
         return $node->x == $this->end->x && $node->y == $this->end->y;
     }
 
-    private function pointIndex(Node $node)
+    private function pointIndex(Node $node): string
     {
         return $node->x . '_' . $node->y;
     }
@@ -225,12 +224,12 @@ final class AStar
         return $node->g + $weight;
     }
 
-    private function getHeuristic(Node $node)
+    private function getHeuristic(Node $node): int
     {
         return (abs($node->x - $this->end->x) + abs($node->y - $this->end->y)) * self::DIRECT_WEIGHT;
     }
 
-    public function displayPic()
+    public function displayRoute()
     {
         header('content-type:text/html;charset=utf-8');
         echo '<table border="1">';
@@ -240,7 +239,6 @@ final class AStar
             for ($x = $this->xRange->min; $x <= $this->xRange->max; $x++)
             {
                 $current = new Point($x, $y);
-
                 if (in_array($current, $this->obstacleList))
                 {
                     $bg = 'bgcolor="#000"';

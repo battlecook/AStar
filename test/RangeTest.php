@@ -30,7 +30,7 @@ class RangeTest extends TestCase
         //given
 
         //when
-        $range = new Range(4, -4);
+        new Range(4, -4);
 
         //then
     }
