@@ -237,11 +237,13 @@ final class AStar
         echo '<br>';
         echo 'E : end point';
         echo '<br>';
+        echo '<br>';
         echo 'Map size';
         echo '<br>';
         echo 'x : random ( -10 ~ 10 )';
         echo '<br>';
         echo 'y : random ( -10 ~ 10 )';
+        echo '<br>';
         echo '<br>';
 
         echo '<table border="1">';
