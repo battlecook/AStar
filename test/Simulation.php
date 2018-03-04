@@ -30,7 +30,14 @@ $obstacleCount = (int) (($maxX - $minX) * ($maxY - $minY) * 0.3);
 $obstacleList = array();
 for($i=0; $i<$obstacleCount; $i++)
 {
-    $obstacleList[] = new Point(rand($minX, $maxX),rand($minY, $maxY));
+    $obstacle = new Point(rand($minX, $maxX),rand($minY, $maxY));
+    if($obstacle->x === $start->x && $obstacle->y === $start->y
+    || $obstacle->x === $end->x && $obstacle->y === $end->y
+    )
+    {
+        continue;
+    }
+    $obstacleList[] = $obstacle;
 }
 
 $aStar = new AStar($start, $end, $xRange, $yRange, $obstacleList);

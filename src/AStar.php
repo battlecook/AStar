@@ -241,17 +241,23 @@ final class AStar
                 $current = new Point($x, $y);
 
                 if (in_array($current, $this->obstacleList))
+                {
                     $bg = 'bgcolor="#000"';
+                }
                 elseif (in_array($current, $this->route))
+                {
                     $bg = 'bgcolor="#5cb85c"';
+                }
                 else
+                {
                     $bg = '';
+                }
 
-                if ($current === $this->start)
+                if ($current->x === $this->start->x && $current->y === $this->start->y)
                 {
                     $content = 'S';
                 }
-                elseif ($current === $this->end)
+                elseif ($current->x === $this->end->x && $current->y === $this->end->y)
                 {
                     $content = 'E';
                 }
