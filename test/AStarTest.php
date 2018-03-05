@@ -128,7 +128,7 @@ class AStarTest extends TestCase
             new Point(-1, 2),
             new Point(0, 2),
             new Point(1, 2),
-            new Point(2, 1),
+            new Point(1, 1),
             new Point(2, 0),
         );
         $this->assertEquals($expectedRoute, $route);
@@ -147,31 +147,22 @@ class AStarTest extends TestCase
         $obstacleList[] = new Point(1,0);
         $obstacleList[] = new Point(2,0);
         $obstacleList[] = new Point(5,0);
-
         $obstacleList[] = new Point(4,1);
-
         $obstacleList[] = new Point(2,3);
         $obstacleList[] = new Point(5,3);
-
         $obstacleList[] = new Point(1,5);
         $obstacleList[] = new Point(3,5);
-
         $obstacleList[] = new Point(2,6);
         $obstacleList[] = new Point(5,6);
-
         $obstacleList[] = new Point(1,7);
         $obstacleList[] = new Point(5,8);
-
         $obstacleList[] = new Point(2,9);
         $obstacleList[] = new Point(6,9);
         $obstacleList[] = new Point(7,9);
-
         $obstacleList[] = new Point(1,10);
         $obstacleList[] = new Point(3,10);
         $obstacleList[] = new Point(4,10);
-
         $obstacleList[] = new Point(2,11);
-
         $obstacleList[] = new Point(1,13);
         $obstacleList[] = new Point(4,14);
 
@@ -186,18 +177,17 @@ class AStarTest extends TestCase
             new Point(4, 4),
             new Point(4, 5),
             new Point(4, 6),
+
             new Point(4, 7),
             new Point(4, 8),
-            new Point(4, 9),
 
+            new Point(4, 9),
             new Point(5, 9),
             new Point(5, 10),
-
             new Point(5, 11),
             new Point(4, 11),
             new Point(3, 12),
             new Point(2, 12),
-
             new Point(1, 12),
             new Point(1, 11),
         );

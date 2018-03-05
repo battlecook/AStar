@@ -226,12 +226,11 @@ final class AStar
 
     private function getHeuristic(Node $node): int
     {
-        $obliqueCount = abs($node->y - $this->end->y);
-        if(abs($node->x - $this->end->x) < $obliqueCount)
-        {
-            $obliqueCount = abs($node->x - $this->end->x);
-        }
-        $directCount = abs($node->x - $this->end->x)  - $obliqueCount;
+        $yLength = abs($node->y - $this->end->y);
+        $xLength = abs($node->x - $this->end->x);
+
+        ($yLength < $xLength)? $obliqueCount = $yLength : $obliqueCount = $xLength;
+        ($yLength < $xLength)? $directCount = $xLength - $obliqueCount : $directCount = $yLength - $obliqueCount;
 
         return $obliqueCount * self::OBLIQUE_WEIGHT + $directCount * self::DIRECT_WEIGHT;
     }
