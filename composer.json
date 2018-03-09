@@ -1,6 +1,9 @@
 {
   "name": "battlecook/astar",
   "description": "AStar algorithm implementation in php",
+  "keywords": [
+    "AStar"
+  ],
   "minimum-stability": "dev",
   "license": "MIT",
   "authors": [
