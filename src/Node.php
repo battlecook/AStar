@@ -24,6 +24,11 @@ final class Node
         $this->parent = null;
     }
 
+    public function __toString()
+    {
+        return $this->index = $this->x . '_' . $this->y;
+    }
+
     public function update()
     {
         $this->f = $this->g + $this->heuristic;
