@@ -4,8 +4,8 @@ namespace battlecook\AStar;
 
 final class Range
 {
-    public $min;
-    public $max;
+    private $min;
+    private $max;
 
     /**
      * Range constructor.
@@ -28,5 +28,15 @@ final class Range
     public function inRange(int $value): bool
     {
         return $value >= $this->min && $value <= $this->max;
+    }
+
+    public function getMin()
+    {
+        return $this->min;
+    }
+
+    public function getMax()
+    {
+        return $this->max;
     }
 }
