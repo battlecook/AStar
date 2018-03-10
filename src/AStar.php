@@ -64,7 +64,7 @@ final class AStar
      */
     public function route(): array
     {
-        $current = new Node($this->start->x, $this->start->y);
+        $current = new Node($this->start->getX(), $this->start->getY());
         $current->index = $this->pointIndex($current);
         $current->f = $current->heuristic = $this->getHeuristic($current);
 
@@ -78,7 +78,7 @@ final class AStar
 
             if ($this->isEndPoint($current))
             {
-                $this->route[] = new Point($this->end->x, $this->end->y);
+                $this->route[] = new Point($this->end->getX(), $this->end->getY());
                 while ($current->parent !== null)
                 {
                     $tmp = $this->close[$this->pointIndex($current->parent)];
@@ -96,7 +96,7 @@ final class AStar
 
     private function inRange(Point $point): bool
     {
-        if($this->xRange->inRange($point->x) && $this->yRange->inRange($point->y))
+        if($this->xRange->inRange($point->getX()) && $this->yRange->inRange($point->getY()))
         {
             return true;
         }
@@ -161,7 +161,7 @@ final class AStar
 
         foreach($obliqueDirectionGroup as $obliqueDirection)
         {
-            $aroundNode = new Node($current->x + $obliqueDirection->x, $current->y + $obliqueDirection->y);
+            $aroundNode = new Node($current->x + $obliqueDirection->getX(), $current->y + $obliqueDirection->getY());
             if(in_array(new Point($aroundNode->x, $aroundNode->y), $this->obstacleList))
             {
                 continue;
@@ -211,7 +211,7 @@ final class AStar
 
     private function isEndPoint(Node $node): bool
     {
-        return $node->x == $this->end->x && $node->y == $this->end->y;
+        return $node->x == $this->end->getX() && $node->y == $this->end->getY();
     }
 
     private function pointIndex(Node $node): string
@@ -226,8 +226,8 @@ final class AStar
 
     private function getHeuristic(Node $node): int
     {
-        $yLength = abs($node->y - $this->end->y);
-        $xLength = abs($node->x - $this->end->x);
+        $yLength = abs($node->y - $this->end->getY());
+        $xLength = abs($node->x - $this->end->getX());
 
         ($yLength < $xLength)? $obliqueCount = $yLength : $obliqueCount = $xLength;
         ($yLength < $xLength)? $directCount = $xLength - $obliqueCount : $directCount = $yLength - $obliqueCount;
@@ -253,10 +253,10 @@ final class AStar
         echo '<br>';
 
         echo '<table border="1">';
-        for ($y = $this->yRange->min; $y <= $this->yRange->max; $y++)
+        for ($y = $this->yRange->getMin(); $y <= $this->yRange->getMax(); $y++)
         {
             echo '<tr>';
-            for ($x = $this->xRange->min; $x <= $this->xRange->max; $x++)
+            for ($x = $this->xRange->getMin(); $x <= $this->xRange->getMax(); $x++)
             {
                 $current = new Point($x, $y);
                 if (in_array($current, $this->obstacleList))
@@ -272,11 +272,11 @@ final class AStar
                     $bg = '';
                 }
 
-                if ($current->x === $this->start->x && $current->y === $this->start->y)
+                if ($current->getX() === $this->start->getX() && $current->getY() === $this->start->getY())
                 {
                     $content = 'S';
                 }
-                elseif ($current->x === $this->end->x && $current->y === $this->end->y)
+                elseif ($current->getX() === $this->end->getX() && $current->getY() === $this->end->getY())
                 {
                     $content = 'E';
                 }
