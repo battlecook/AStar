@@ -134,7 +134,10 @@ class AStarTest extends TestCase
         $this->assertEquals($expectedRoute, $route);
     }
 
-    public function testRoute()
+    /**
+     * @throws \battlecook\AStar\AStarException
+     */
+    public function testRoute1()
     {
         //given
         $start = new Point(3, 3);
@@ -177,10 +180,8 @@ class AStarTest extends TestCase
             new Point(4, 4),
             new Point(4, 5),
             new Point(4, 6),
-
             new Point(4, 7),
             new Point(4, 8),
-
             new Point(4, 9),
             new Point(5, 9),
             new Point(5, 10),
@@ -190,6 +191,107 @@ class AStarTest extends TestCase
             new Point(2, 12),
             new Point(1, 12),
             new Point(1, 11),
+        );
+        $this->assertEquals($expectedRoute, $route);
+    }
+
+    /**
+     * @throws \battlecook\AStar\AStarException
+     */
+    public function testRoute2()
+    {
+        //given
+        $start = new Point(1, 10);
+        $end = new Point(14, 6);
+
+        $xRange = new Range(1, 16);
+        $yRange = new Range(1, 10);
+
+        $obstacleList = array();
+        $obstacleList[] = new Point(4,1);
+        $obstacleList[] = new Point(5,1);
+        $obstacleList[] = new Point(10,1);
+        $obstacleList[] = new Point(11,1);
+        $obstacleList[] = new Point(13,1);
+        $obstacleList[] = new Point(15,1);
+
+        $obstacleList[] = new Point(2,2);
+        $obstacleList[] = new Point(3,2);
+        $obstacleList[] = new Point(6,2);
+        $obstacleList[] = new Point(8,2);
+        $obstacleList[] = new Point(9,2);
+        $obstacleList[] = new Point(13,2);
+        $obstacleList[] = new Point(15, 2);
+
+        $obstacleList[] = new Point(7,3);
+
+        $obstacleList[] = new Point(1,4);
+        $obstacleList[] = new Point(5,4);
+        $obstacleList[] = new Point(8,4);
+        $obstacleList[] = new Point(11,4);
+
+        $obstacleList[] = new Point(4,5);
+        $obstacleList[] = new Point(6,5);
+        $obstacleList[] = new Point(9,5);
+        $obstacleList[] = new Point(13,5);
+        $obstacleList[] = new Point(14,5);
+
+        $obstacleList[] = new Point(2,6);
+        $obstacleList[] = new Point(4,6);
+
+        $obstacleList[] = new Point(3,7);
+        $obstacleList[] = new Point(5,7);
+        $obstacleList[] = new Point(6,7);
+
+        $obstacleList[] = new Point(7,8);
+        $obstacleList[] = new Point(8,8);
+        $obstacleList[] = new Point(9,8);
+        $obstacleList[] = new Point(10,8);
+        $obstacleList[] = new Point(15,8);
+
+        $obstacleList[] = new Point(3,9);
+        $obstacleList[] = new Point(6,9);
+        $obstacleList[] = new Point(10,9);
+        $obstacleList[] = new Point(14,9);
+
+        $obstacleList[] = new Point(4,10);
+        $obstacleList[] = new Point(5,10);
+        $obstacleList[] = new Point(6,10);
+
+        $aStar = new AStar($start, $end, $xRange, $yRange, $obstacleList);
+
+        //when
+        $route = $aStar->route();
+
+        //then
+        $expectedRoute = array(
+            new Point(1, 10),
+            new Point(1, 9),
+            new Point(1, 8),
+            new Point(1, 7),
+            new Point(1, 6),
+            new Point(1, 5),
+
+            new Point(2, 5),
+            new Point(3, 4),
+
+            new Point(4, 3),
+            new Point(5, 3),
+            new Point(6, 3),
+
+            new Point(6, 4),
+
+            new Point(7, 4),
+            new Point(7, 5),
+
+            new Point(8, 6),
+            new Point(9, 6),
+            new Point(10, 6),
+            new Point(11, 6),
+            new Point(12, 6),
+            new Point(13, 6),
+
+            new Point(14, 6),
         );
         $this->assertEquals($expectedRoute, $route);
     }
