@@ -10,7 +10,7 @@ final class Node
     public $index;
     public $f;
 
-    public $g;
+    private $g;
     public $heuristic;
 
     private $parent;
@@ -40,5 +40,15 @@ final class Node
     public function getParent()
     {
         return $this->parent;
+    }
+
+    public function getG(): int
+    {
+        return $this->g;
+    }
+
+    public function setG(int $g)
+    {
+        $this->g = $g;
     }
 }
