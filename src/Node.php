@@ -13,7 +13,7 @@ final class Node
     public $g;
     public $heuristic;
 
-    public $parent;
+    private $parent;
 
     public function __construct(int $x, int $y)
     {
@@ -24,13 +24,18 @@ final class Node
         $this->parent = null;
     }
 
-    public function __toString()
-    {
-        return $this->index = $this->x . '_' . $this->y;
-    }
-
     public function update()
     {
         $this->f = $this->g + $this->heuristic;
+    }
+
+    public function setParent(Node $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
