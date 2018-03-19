@@ -31,8 +31,8 @@ $obstacleList = array();
 for($i=0; $i<$obstacleCount; $i++)
 {
     $obstacle = new Point(rand($minX, $maxX),rand($minY, $maxY));
-    if($obstacle->x === $start->x && $obstacle->y === $start->y
-    || $obstacle->x === $end->x && $obstacle->y === $end->y
+    if($obstacle->getX() === $start->getX() && $obstacle->getY() === $start->getY()
+    || $obstacle->getX() === $end->getX() && $obstacle->getY() === $end->getY()
     )
     {
         continue;
