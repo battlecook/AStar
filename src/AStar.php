@@ -79,11 +79,11 @@ final class AStar
             if ($this->isEndPoint($current))
             {
                 $this->route[] = new Point($this->end->getX(), $this->end->getY());
-                while ($current->parent !== null)
+                while ($current->getParent() !== null)
                 {
-                    $tmp = $this->close[$this->pointIndex($current->parent)];
+                    $tmp = $this->close[$this->pointIndex($current->getParent())];
                     $this->route[] = new Point($tmp->x, $tmp->y);
-                    $current = $this->close[$this->pointIndex($current->parent)];
+                    $current = $this->close[$this->pointIndex($current->getParent())];
                 }
 
                 $this->route = array_reverse($this->route);
@@ -172,7 +172,7 @@ final class AStar
                 {
                     if($this->open[$aroundNode->index]->g > $this->getG($current, self::OBLIQUE_WEIGHT))
                     {
-                        $this->open[$aroundNode->index]->parent = $current;
+                        $this->open[$aroundNode->index]->setParent($current);
                     }
                 }
                 else
@@ -180,7 +180,7 @@ final class AStar
                     $aroundNode->g = $this->getG($current, self::OBLIQUE_WEIGHT);
                     $aroundNode->heuristic = $this->getHeuristic($aroundNode);
                     $aroundNode->update();
-                    $aroundNode->parent = $current;
+                    $aroundNode->setParent($current);
                     $this->open[$aroundNode->index] = $aroundNode;
                 }
             }
@@ -195,7 +195,7 @@ final class AStar
             {
                 if($this->open[$aroundNode->index]->g > $this->getG($current, self::DIRECT_WEIGHT))
                 {
-                    $this->open[$aroundNode->index]->parent = $current;
+                    $this->open[$aroundNode->index]->setParent($current);
                 }
             }
             else
@@ -203,7 +203,7 @@ final class AStar
                 $aroundNode->g = $this->getG($current, self::DIRECT_WEIGHT);
                 $aroundNode->heuristic = $this->getHeuristic($aroundNode);
                 $aroundNode->update();
-                $aroundNode->parent = $current;
+                $aroundNode->setParent($current);
                 $this->open[$aroundNode->index] = $aroundNode;
             }
         }
