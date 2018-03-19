@@ -169,14 +169,14 @@ final class AStar
             {
                 if(isset($this->open[$aroundNode->index]))
                 {
-                    if($this->open[$aroundNode->index]->g > $this->getG($current, self::OBLIQUE_WEIGHT))
+                    if($this->open[$aroundNode->index]->getG() > $this->getG($current, self::OBLIQUE_WEIGHT))
                     {
                         $this->open[$aroundNode->index]->setParent($current);
                     }
                 }
                 else
                 {
-                    $aroundNode->g = $this->getG($current, self::OBLIQUE_WEIGHT);
+                    $aroundNode->setG($this->getG($current, self::OBLIQUE_WEIGHT));
                     $aroundNode->heuristic = $this->getHeuristic($aroundNode);
                     $aroundNode->update();
                     $aroundNode->setParent($current);
@@ -192,14 +192,14 @@ final class AStar
         {
             if(isset($this->open[$aroundNode->index]))
             {
-                if($this->open[$aroundNode->index]->g > $this->getG($current, self::DIRECT_WEIGHT))
+                if($this->open[$aroundNode->index]->getG() > $this->getG($current, self::DIRECT_WEIGHT))
                 {
                     $this->open[$aroundNode->index]->setParent($current);
                 }
             }
             else
             {
-                $aroundNode->g = $this->getG($current, self::DIRECT_WEIGHT);
+                $aroundNode->setG($this->getG($current, self::DIRECT_WEIGHT));
                 $aroundNode->heuristic = $this->getHeuristic($aroundNode);
                 $aroundNode->update();
                 $aroundNode->setParent($current);
@@ -215,7 +215,7 @@ final class AStar
 
     private function getG(Node $node, $weight): int
     {
-        return $node->g + $weight;
+        return $node->getG() + $weight;
     }
 
     private function getHeuristic(Node $node): int
