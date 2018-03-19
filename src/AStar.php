@@ -65,7 +65,6 @@ final class AStar
     public function route(): array
     {
         $current = new Node($this->start->getX(), $this->start->getY());
-        $current->index = $this->pointIndex($current);
         $current->f = $current->heuristic = $this->getHeuristic($current);
 
         $this->open[$current->index] = $current;
@@ -81,9 +80,9 @@ final class AStar
                 $this->route[] = new Point($this->end->getX(), $this->end->getY());
                 while ($current->getParent() !== null)
                 {
-                    $tmp = $this->close[$this->pointIndex($current->getParent())];
+                    $tmp = $this->close[$current->getParent()->index];
                     $this->route[] = new Point($tmp->x, $tmp->y);
-                    $current = $this->close[$this->pointIndex($current->getParent())];
+                    $current = $this->close[$current->getParent()->index];
                 }
 
                 $this->route = array_reverse($this->route);
@@ -212,11 +211,6 @@ final class AStar
     private function isEndPoint(Node $node): bool
     {
         return $node->x == $this->end->getX() && $node->y == $this->end->getY();
-    }
-
-    private function pointIndex(Node $node): string
-    {
-        return $node->x . '_' . $node->y;
     }
 
     private function getG(Node $node, $weight): int
