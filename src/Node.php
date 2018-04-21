@@ -34,10 +34,7 @@ final class Node
         $this->parent = $parent;
     }
 
-    /**
-     * @return null|Node
-     */
-    public function getParent()
+    public function getParent(): ?Node
     {
         return $this->parent;
     }
