@@ -30,12 +30,12 @@ final class Range
         return $value >= $this->min && $value <= $this->max;
     }
 
-    public function getMin()
+    public function getMin(): int
     {
         return $this->min;
     }
 
-    public function getMax()
+    public function getMax(): int
     {
         return $this->max;
     }
