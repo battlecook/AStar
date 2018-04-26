@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace battlecook\AStar;
 
 final class AStar
@@ -57,6 +59,9 @@ final class AStar
 
         $this->obstacleList = $obstacleGroup;
         $this->route = array();
+
+        $this->open = new NodeCollection();
+        $this->close = new NodeCollection();
     }
 
     /**
@@ -65,25 +70,26 @@ final class AStar
     public function route(): array
     {
         $current = new Node($this->start->getX(), $this->start->getY());
-        $current->f = $current->heuristic = $this->getHeuristic($current);
+        $current->setHeuristic($this->getHeuristic($current));
+        $current->f = $this->getHeuristic($current);
 
-        $this->open[$current->index] = $current;
+        $this->open->add($current);
 
-        while(count($this->open) > 0)
+        while($this->open->count() > 0)
         {
             $current = $this->getMinFNode();
-            unset($this->open[$current->index]);
-            $this->close[$current->index] = $current;
+            $this->open->remove($current);
+            $this->close->add($current);
 
             if ($this->isEndPoint($current))
             {
-                $this->route[] = new Point($this->end->getX(), $this->end->getY());
                 while ($current->getParent() !== null)
                 {
-                    $tmp = $this->close[$current->getParent()->index];
+                    $tmp = $this->close->get($current);
                     $this->route[] = new Point($tmp->x, $tmp->y);
-                    $current = $this->close[$current->getParent()->index];
+                    $current = $this->close->get($current->getParent());
                 }
+                $this->route[] = new Point($this->start->getX(), $this->start->getY());
 
                 $this->route = array_reverse($this->route);
             }
@@ -107,16 +113,16 @@ final class AStar
     {
         $f = null;
         $min = null;
-        foreach ($this->open as $index => $node)
+        foreach ($this->open->getAll() as $index => $node)
         {
             if ($f === null || $f > $node->f)
             {
-                $min = $index;
+                $min = $node;
                 $f = $node->f;
             }
         }
 
-        return $this->open[$min];
+        return $min;
     }
 
     /**
@@ -165,22 +171,22 @@ final class AStar
             {
                 continue;
             }
-            if(!isset($this->close[$aroundNode->index]) && $this->inRange(new Point($aroundNode->x, $aroundNode->y)))
+            if($this->close->get($aroundNode) === null && $this->inRange(new Point($aroundNode->x, $aroundNode->y)))
             {
-                if(isset($this->open[$aroundNode->index]))
+                if($this->open->get($aroundNode))
                 {
-                    if($this->open[$aroundNode->index]->getG() > $this->getG($current, self::OBLIQUE_WEIGHT))
+                    if($this->open->get($aroundNode)->getG() > $this->getG($current, self::OBLIQUE_WEIGHT))
                     {
-                        $this->open[$aroundNode->index]->setParent($current);
+                        $this->open->get($aroundNode)->setParent($current);
                     }
                 }
                 else
                 {
                     $aroundNode->setG($this->getG($current, self::OBLIQUE_WEIGHT));
-                    $aroundNode->heuristic = $this->getHeuristic($aroundNode);
+                    $aroundNode->setHeuristic($this->getHeuristic($aroundNode));
                     $aroundNode->update();
                     $aroundNode->setParent($current);
-                    $this->open[$aroundNode->index] = $aroundNode;
+                    $this->open->add($aroundNode);
                 }
             }
         }
@@ -188,22 +194,22 @@ final class AStar
 
     private function addNodeInOpen(Node $aroundNode, Node $current)
     {
-        if(!isset($this->close[$aroundNode->index]) && $this->inRange(new Point($aroundNode->x, $aroundNode->y)))
+        if($this->close->get($aroundNode) === null && $this->inRange(new Point($aroundNode->x, $aroundNode->y)))
         {
-            if(isset($this->open[$aroundNode->index]))
+            if($this->open->get($aroundNode))
             {
-                if($this->open[$aroundNode->index]->getG() > $this->getG($current, self::DIRECT_WEIGHT))
+                if($this->open->get($aroundNode)->getG() > $this->getG($current, self::DIRECT_WEIGHT))
                 {
-                    $this->open[$aroundNode->index]->setParent($current);
+                    $this->open->get($aroundNode)->setParent($current);
                 }
             }
             else
             {
                 $aroundNode->setG($this->getG($current, self::DIRECT_WEIGHT));
-                $aroundNode->heuristic = $this->getHeuristic($aroundNode);
+                $aroundNode->setHeuristic($this->getHeuristic($aroundNode));
                 $aroundNode->update();
                 $aroundNode->setParent($current);
-                $this->open[$aroundNode->index] = $aroundNode;
+                $this->open->add($aroundNode);
             }
         }
     }
@@ -218,7 +224,7 @@ final class AStar
         return $node->getG() + $weight;
     }
 
-    private function getHeuristic(Node $node): int
+    private function getHeuristic(Node $node)
     {
         $yLength = abs($node->y - $this->end->getY());
         $xLength = abs($node->x - $this->end->getX());
