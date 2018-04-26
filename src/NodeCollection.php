@@ -21,11 +21,6 @@ final class NodeCollection
        return null;
    }
 
-   public function getAll()
-   {
-       return $this->nodeMap;
-   }
-
    public function add(Node $node)
    {
        if(isset($this->nodeMap[$node->getIndex()]) === false)
@@ -53,12 +48,22 @@ final class NodeCollection
 
    public function count()
    {
-
        return count($this->nodeMap);
    }
 
    public function getMinFNode(): ?Node
    {
-       return $this->minNode;
+       $f = null;
+       $min = null;
+       foreach ($this->nodeMap as $node)
+       {
+           if ($f === null || $f > $node->f)
+           {
+               $min = $node;
+               $f = $node->f;
+           }
+       }
+
+       return $min;
    }
 }

@@ -77,17 +77,21 @@ final class AStar
 
         while($this->open->count() > 0)
         {
-            $current = $this->getMinFNode();
+            $current = $this->open->getMinFNode();
             $this->open->remove($current);
             $this->close->add($current);
 
             if ($this->isEndPoint($current))
             {
-                while ($current->getParent() !== null)
+                while ($parent = $current->getParent())
                 {
+                    if($parent === null)
+                    {
+                        break;
+                    }
                     $tmp = $this->close->get($current);
                     $this->route[] = new Point($tmp->x, $tmp->y);
-                    $current = $this->close->get($current->getParent());
+                    $current = $this->close->get($parent);
                 }
                 $this->route[] = new Point($this->start->getX(), $this->start->getY());
 
@@ -107,22 +111,6 @@ final class AStar
         }
 
         return false;
-    }
-
-    private function getMinFNode(): Node
-    {
-        $f = null;
-        $min = null;
-        foreach ($this->open->getAll() as $index => $node)
-        {
-            if ($f === null || $f > $node->f)
-            {
-                $min = $node;
-                $f = $node->f;
-            }
-        }
-
-        return $min;
     }
 
     /**
