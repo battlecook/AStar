@@ -7,11 +7,11 @@ final class Node
     public $x;
     public $y;
 
-    public $index;
+    private $index;
     public $f;
 
     private $g;
-    public $heuristic;
+    private $heuristic;
 
     private $parent;
 
@@ -47,5 +47,20 @@ final class Node
     public function setG(int $g)
     {
         $this->g = $g;
+    }
+
+    public function getIndex(): string
+    {
+        return $this->index;
+    }
+
+    public function getHeuristic()
+    {
+        return $this->heuristic;
+    }
+
+    public function setHeuristic($heuristic)
+    {
+        $this->heuristic = $heuristic;
     }
 }
