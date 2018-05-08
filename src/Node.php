@@ -8,7 +8,6 @@ final class Node
     private $y;
 
     private $index;
-    private $f;
 
     private $g;
     private $heuristic;
@@ -63,11 +62,6 @@ final class Node
     public function getF(): int
     {
         return $this->g + $this->heuristic;
-    }
-
-    public function setF(int $f)
-    {
-        $this->f = $f;
     }
 
     public function getX(): int
