@@ -17,8 +17,8 @@ final class AStar
     private $xRange;
     private $yRange;
 
-    public $open;
-    public $close;
+    private $open;
+    private $close;
 
     public $obstacleList = array();
 
