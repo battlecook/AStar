@@ -70,8 +70,7 @@ final class AStar
     public function route(): array
     {
         $current = new Node($this->start->getX(), $this->start->getY());
-        $current->setHeuristic($this->getHeuristic($current));
-        $current->f = $this->getHeuristic($current);
+        $current->setHeuristic($this->getHeuristic($current->x, $current->y));
 
         $this->open->add($current);
 
@@ -171,9 +170,9 @@ final class AStar
                 else
                 {
                     $aroundNode->setG($this->getG($current, self::OBLIQUE_WEIGHT));
-                    $aroundNode->setHeuristic($this->getHeuristic($aroundNode));
-                    $aroundNode->update();
+                    $aroundNode->setHeuristic($this->getHeuristic($aroundNode->x, $aroundNode->y));
                     $aroundNode->setParent($current);
+
                     $this->open->add($aroundNode);
                 }
             }
@@ -194,9 +193,9 @@ final class AStar
             else
             {
                 $aroundNode->setG($this->getG($current, self::DIRECT_WEIGHT));
-                $aroundNode->setHeuristic($this->getHeuristic($aroundNode));
-                $aroundNode->update();
+                $aroundNode->setHeuristic($this->getHeuristic($aroundNode->x, $aroundNode->y));
                 $aroundNode->setParent($current);
+
                 $this->open->add($aroundNode);
             }
         }
@@ -212,10 +211,10 @@ final class AStar
         return $node->getG() + $weight;
     }
 
-    private function getHeuristic(Node $node)
+    private function getHeuristic(int $x, int $y)
     {
-        $yLength = abs($node->y - $this->end->getY());
-        $xLength = abs($node->x - $this->end->getX());
+        $yLength = abs($y - $this->end->getY());
+        $xLength = abs($x - $this->end->getX());
 
         ($yLength < $xLength)? $obliqueCount = $yLength : $obliqueCount = $xLength;
         ($yLength < $xLength)? $directCount = $xLength - $obliqueCount : $directCount = $yLength - $obliqueCount;
