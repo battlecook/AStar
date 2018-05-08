@@ -8,7 +8,7 @@ final class Node
     public $y;
 
     private $index;
-    public $f;
+    private $f;
 
     private $g;
     private $heuristic;
@@ -22,11 +22,6 @@ final class Node
         $this->index = $this->x . '_' . $this->y;
         $this->g = 0;
         $this->parent = null;
-    }
-
-    public function update()
-    {
-        $this->f = $this->g + $this->heuristic;
     }
 
     public function setParent(Node $parent)
@@ -59,8 +54,18 @@ final class Node
         return $this->heuristic;
     }
 
-    public function setHeuristic($heuristic)
+    public function setHeuristic(int $heuristic)
     {
         $this->heuristic = $heuristic;
+    }
+
+    public function getF(): int
+    {
+        return $this->g + $this->heuristic;
+    }
+
+    public function setF(int $f)
+    {
+        $this->f = $f;
     }
 }

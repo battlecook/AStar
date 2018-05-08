@@ -10,6 +10,7 @@ final class NodeCollection
    public function __construct()
    {
        $this->nodeMap = array();
+       $this->minNode = null;
    }
 
    public function get(Node $node): ?Node
@@ -26,17 +27,9 @@ final class NodeCollection
        if(isset($this->nodeMap[$node->getIndex()]) === false)
        {
            $this->nodeMap[$node->getIndex()] = $node;
-
-           if($this->minNode === null)
+           if($this->minNode === null || ($this->minNode instanceof Node && $this->minNode->getF() > $node->getF()))
            {
                $this->minNode = $node;
-           }
-           else
-           {
-               if($this->minNode->f > $node->f)
-               {
-                   $this->minNode = $node;
-               }
            }
        }
    }
@@ -57,10 +50,10 @@ final class NodeCollection
        $min = null;
        foreach ($this->nodeMap as $node)
        {
-           if ($f === null || $f > $node->f)
+           if ($f === null || $f > $node->getF())
            {
                $min = $node;
-               $f = $node->f;
+               $f = $node->getF();
            }
        }
 
