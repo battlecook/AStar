@@ -4,8 +4,8 @@ namespace battlecook\AStar;
 
 final class Node
 {
-    public $x;
-    public $y;
+    private $x;
+    private $y;
 
     private $index;
     private $f;
@@ -21,6 +21,7 @@ final class Node
         $this->y = $y;
         $this->index = $this->x . '_' . $this->y;
         $this->g = 0;
+        $this->heuristic = 0;
         $this->parent = null;
     }
 
@@ -67,5 +68,15 @@ final class Node
     public function setF(int $f)
     {
         $this->f = $f;
+    }
+
+    public function getX(): int
+    {
+        return $this->x;
+    }
+
+    public function getY(): int
+    {
+        return $this->y;
     }
 }

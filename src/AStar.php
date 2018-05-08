@@ -70,7 +70,7 @@ final class AStar
     public function route(): array
     {
         $current = new Node($this->start->getX(), $this->start->getY());
-        $current->setHeuristic($this->getHeuristic($current->x, $current->y));
+        $current->setHeuristic($this->getHeuristic($current->getX(), $current->getY()));
 
         $this->open->add($current);
 
@@ -89,7 +89,7 @@ final class AStar
                         break;
                     }
                     $tmp = $this->close->get($current);
-                    $this->route[] = new Point($tmp->x, $tmp->y);
+                    $this->route[] = new Point($tmp->getX(), $tmp->getY());
                     $current = $this->close->get($parent);
                 }
                 $this->route[] = new Point($this->start->getX(), $this->start->getY());
@@ -125,15 +125,15 @@ final class AStar
         );
 
         $directDirectionGroup = array(
-            new Node($current->x + 1, $current->y),
-            new Node($current->x, $current->y + 1),
-            new Node($current->x - 1, $current->y),
-            new Node($current->x, $current->y - 1)
+            new Node($current->getX() + 1, $current->getY()),
+            new Node($current->getX(), $current->getY() + 1),
+            new Node($current->getX() - 1, $current->getY()),
+            new Node($current->getX(), $current->getY() - 1)
         );
 
         foreach($directDirectionGroup as $key => $directDirection)
         {
-            if(in_array(new Point($directDirection->x, $directDirection->y), $this->obstacleList))
+            if(in_array(new Point($directDirection->getX(), $directDirection->getY()), $this->obstacleList))
             {
                 unset($obliqueDirectionGroup[$key]);
                 if($key - 1 < 0)
@@ -153,12 +153,12 @@ final class AStar
 
         foreach($obliqueDirectionGroup as $obliqueDirection)
         {
-            $aroundNode = new Node($current->x + $obliqueDirection->getX(), $current->y + $obliqueDirection->getY());
-            if(in_array(new Point($aroundNode->x, $aroundNode->y), $this->obstacleList))
+            $aroundNode = new Node($current->getX() + $obliqueDirection->getX(), $current->getY() + $obliqueDirection->getY());
+            if(in_array(new Point($aroundNode->getX(), $aroundNode->getY()), $this->obstacleList))
             {
                 continue;
             }
-            if($this->close->get($aroundNode) === null && $this->inRange(new Point($aroundNode->x, $aroundNode->y)))
+            if($this->close->get($aroundNode) === null && $this->inRange(new Point($aroundNode->getX(), $aroundNode->getY())))
             {
                 if($this->open->get($aroundNode))
                 {
@@ -170,7 +170,7 @@ final class AStar
                 else
                 {
                     $aroundNode->setG($this->getG($current, self::OBLIQUE_WEIGHT));
-                    $aroundNode->setHeuristic($this->getHeuristic($aroundNode->x, $aroundNode->y));
+                    $aroundNode->setHeuristic($this->getHeuristic($aroundNode->getX(), $aroundNode->getY()));
                     $aroundNode->setParent($current);
 
                     $this->open->add($aroundNode);
@@ -181,7 +181,7 @@ final class AStar
 
     private function addNodeInOpen(Node $aroundNode, Node $current)
     {
-        if($this->close->get($aroundNode) === null && $this->inRange(new Point($aroundNode->x, $aroundNode->y)))
+        if($this->close->get($aroundNode) === null && $this->inRange(new Point($aroundNode->getX(), $aroundNode->getY())))
         {
             if($this->open->get($aroundNode))
             {
@@ -193,7 +193,7 @@ final class AStar
             else
             {
                 $aroundNode->setG($this->getG($current, self::DIRECT_WEIGHT));
-                $aroundNode->setHeuristic($this->getHeuristic($aroundNode->x, $aroundNode->y));
+                $aroundNode->setHeuristic($this->getHeuristic($aroundNode->getX(), $aroundNode->getY()));
                 $aroundNode->setParent($current);
 
                 $this->open->add($aroundNode);
@@ -203,7 +203,7 @@ final class AStar
 
     private function isEndPoint(Node $node): bool
     {
-        return $node->x == $this->end->getX() && $node->y == $this->end->getY();
+        return $node->getX() == $this->end->getX() && $node->getY() == $this->end->getY();
     }
 
     private function getG(Node $node, $weight): int
