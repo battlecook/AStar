@@ -36,7 +36,7 @@ final class AStar
         $this->xRange = $xRange;
         $this->yRange = $yRange;
 
-        if($this->inRange($start) ===false)
+        if($this->inRange($start) === false)
         {
             throw new AStarException("start point is out of range");
         }
