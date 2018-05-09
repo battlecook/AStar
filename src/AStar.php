@@ -203,7 +203,7 @@ final class AStar
 
     private function isEndPoint(Node $node): bool
     {
-        return $node->getX() == $this->end->getX() && $node->getY() == $this->end->getY();
+        return $node->getX() === $this->end->getX() && $node->getY() === $this->end->getY();
     }
 
     private function getG(Node $node, $weight): int
