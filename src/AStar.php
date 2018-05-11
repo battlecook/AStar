@@ -6,8 +6,8 @@ namespace battlecook\AStar;
 
 final class AStar
 {
-    const DIRECT_WEIGHT = 10;
-    const OBLIQUE_WEIGHT = 14;
+    private const DIRECT_WEIGHT = 10;
+    private const OBLIQUE_WEIGHT = 14;
 
     private $route;
 
